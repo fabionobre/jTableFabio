@@ -122,6 +122,9 @@
 			}
 
 			conteudo += "<TABLE>";
+			
+			// Cria o cabecalho da grid
+			
 			conteudo += "<TR>";
 			for ( var i = 0; i < cabecalho.length; i++) {
 
@@ -193,10 +196,10 @@
 				conteudo += '</TH>';
 			}
 
-			// ---
-
 			conteudo += "</TR>";
 
+			// Popula a grid com os valores
+						
 			for ( var i = 0; i < json.length; i++) {
 
 				conteudo += '<TR id="' + settings.nome + '-'
@@ -377,6 +380,8 @@
 
 			conteudo += "</TABLE>";
 
+			// Cria a paginação da grid
+			
 			if (paginas > 0) {
 
 				conteudo += '<div class="pagination pagination-left">';
@@ -456,6 +461,8 @@
 
 			}
 
+			// --
+			
 			$(div).html(conteudo);
 			$(window).trigger('resize');
 
@@ -536,13 +543,7 @@
 
 		formataValor = function(valor) {
 
-			// valorProd = (Math.round(valor)).toString();
-      valorProd = (Math.round(valor*100)).toString();
-
-			// for (i=0; i<= (valorProd.length + 1) - valorProd.length; i++) {
-			// 	valorProd = valorProd + "0";
-			// }
-
+			valorProd = (Math.round(valor*100)).toString();
 			valorString = "R$ " + valorProd.substring(0, valorProd.length-2) + "," + valorProd.toString().substring(valorProd.length-2, valorProd.length);
 
 			return valorString;
