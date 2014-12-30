@@ -1,7 +1,7 @@
 (function($) {
 
 	$.fn.jTable = function(settings) {
-
+	
 		settings = $.extend({
 			mensagem : 'msg_padrao',
 			parametros : {},
@@ -9,7 +9,10 @@
 			opcoesWidth : '80px',
 			mensagemEmpty: 'Nenhum dado encontrado',
 			mensagemCarregando: 'Carregando',
-			async: true
+			async: true,
+			checkbox: false,
+			titleBar: true,
+			actionBar: false
 		}, settings);
 
 		var parametros = settings;
@@ -17,7 +20,8 @@
 		var cabecalho = [];
 		var div = this;
 		var paginaAtual = 0;
-
+		var divName = this.attr('id');
+		
 		$.fn.extend({
 			setParametros : function(parametrosIn) {
 
@@ -59,7 +63,7 @@
 				json = parametros.dados;
 				paginaAtual = pagina;
 				getCabecalho(parametros.dados);
-				showTable(parametros.dados);
+				showTable();
 
 			} else {
 
@@ -77,8 +81,8 @@
 						paginaAtual = pagina;
 
 						getCabecalho(json.tabela);
-
-						showTable(json.tabela);
+						parametros.dados = json.tabela;
+						showTable();
 					},
 					error : function(XMLHttpRequest, textStatus, errorThrown) {
 
@@ -94,13 +98,102 @@
 
 		}
 
-		function showTable(json) {
+		function constroiCabecalho() {
+		
+			conteudo = "";
+			console.log(parametros.actionBar);
+		
+			if (parametros.titleBar) {
+				conteudo += constroiCabecalhoTitle();
+			} 
+			
+			if (parametros.actionBar) {
+				conteudo += constroiCabecalhoAction();
+			}
+			
+			return conteudo;
+		}
+		
+		function columnsCount() {
 
+			var colunas = cabecalho.length - 1;
+
+			if (settings.editar || settings.remover || (settings.opcoes.length > 0)) {
+
+				colunas++;
+			}
+
+			return colunas;
+		}
+		
+		function constroiCabecalhoAction() {
+		
+			var colunas = columnsCount();
+			conteudo = "";
+			conteudo += "<TR>";
+			
+			if (parametros.checkbox) {
+				conteudo += '<TH class="center" style="width:20px;">';
+				conteudo += '<input type="checkbox" class="jTableCheckBnt" rel="' + divName + '" />';
+				conteudo += '</TH>';				
+			}
+			
+			conteudo += '<TH class="left last" colspan="' + (colunas + 1) + '">';
+			conteudo += '</TH>';							
+			return conteudo;
+		}
+		
+		function constroiCabecalhoTitle() {
+			
+			var colunas = cabecalho.length - 1;
+
+			if (settings.editar || settings.remover || (settings.opcoes.length > 0)) {
+
+				colunas++;
+			}
+			
+			conteudo = "";
+			conteudo += "<TR>";
+			
+			if (parametros.checkbox) {
+				conteudo += '<TH class="center" style="width:20px;">';
+				conteudo += '<input type="checkbox" class="jTableCheckBnt" rel="' + divName + '" />';
+				conteudo += '</TH>';				
+			}
+			
+			for ( var i = 0; i < cabecalho.length; i++) {
+
+				conteudo += '<TH class="' + cabecalho[i].align;
+
+				if (i == colunas) {
+					conteudo += ' last';
+				}
+
+				conteudo += '" style="width:' + cabecalho[i].width + ';">';
+				conteudo += cabecalho[i].titulo || "";
+
+				conteudo += '</TH>';
+			}
+
+			if (settings.opcoes.length > 0) {
+			
+				conteudo += '<TH class="center last" style="width: ' + settings.opcoesWidth + '">';
+				conteudo += settings.opcoesTitulo || 'opções';				
+				conteudo += '</TH>';
+			}
+
+			conteudo += "</TR>";
+			return conteudo;
+		}
+		
+		function showTable() {
+
+			json = parametros.dados;
+		
 			var conteudo = "";
 			var colunas = cabecalho.length - 1;
 
-			if (settings.editar || settings.remover
-					|| (settings.opcoes.length > 0)) {
+			if (settings.editar || settings.remover || (settings.opcoes.length > 0)) {
 
 				colunas++;
 			}
@@ -125,51 +218,20 @@
 			
 			// Cria o cabecalho da grid
 			
-			conteudo += "<TR>";
-			for ( var i = 0; i < cabecalho.length; i++) {
+			conteudo += constroiCabecalho();
 
-				conteudo += '<TH class="' + cabecalho[i].align;
-
-				if (i == colunas) {
-					conteudo += ' last';
-				}
-
-				conteudo += '" style="width:' + cabecalho[i].width + ';">';
-
-				if (cabecalho[i].tipo == "checkbox") {
-
-					if (cabecalho[i].titulo == null || cabecalho[i].titulo == '') {
-
-						conteudo += '<input type="checkbox" class="jTableCheckBnt" rel="' + i + '" />';
-
-					} else {
-
-						conteudo += cabecalho[i].titulo;
-					}
-
-				} else {
-
-					conteudo += cabecalho[i].titulo || "";
-				}
-
-				conteudo += '</TH>';
-			}
-
-			if (settings.opcoes.length > 0) {
+			// Popula a grid com os valores						
 			
-				conteudo += '<TH class="center last" style="width: ' + settings.opcoesWidth + '">';
-				conteudo += settings.opcoesTitulo || conteudo += 'opções';				
-				conteudo += '</TH>';
-			}
-
-			conteudo += "</TR>";
-
-			// Popula a grid com os valores
-						
 			for ( var i = 0; i < json.length; i++) {
 
 				conteudo += '<TR id="' + settings.nome + '-' + json[i][settings.campoRef] + '">';
 
+				if (parametros.checkbox) {
+					conteudo += '<TD class="center">';
+					conteudo += '<input type="checkbox" class="jTableCheck' + divName + '" name="checkbox[]" value="' + i + '" />';					
+					conteudo += '</TD>';				
+				}				
+			
 				for ( var f = 0; f < cabecalho.length; f++) {
 
 					conteudo += '<TD class="' + cabecalho[f].align;
@@ -230,10 +292,6 @@
 						}
 
 						conteudo += variavelPre + conteudoVariavel + variavelPos;
-
-					} else if (cabecalho[f].tipo == "checkbox") {
-
-						conteudo += '<input type="checkbox" class="jTableCheck' + f + '" name="' + cabecalho[f].campo + '[]" value="' + json[i][cabecalho[f].campo] + '" />';
 
 					} else if (cabecalho[f].tipo == "boolean") {
 

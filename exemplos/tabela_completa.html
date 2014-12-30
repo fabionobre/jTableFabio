@@ -16,30 +16,45 @@
 
 		<script>
 
-			data = [{"titulo":"Animagical Masculino - 90ml","id":37,"codigo":"PUANI90","preco":"104.0","quantidade_disponivel":"ilimitado","url":"http://simples.lvh.me:3000/produto/animagical-woman-masculino-90ml"},{"titulo":"Animagical Woman Feminino - 60ml","id":33,"codigo":"PUANI60","preco":"79.9","quantidade_disponivel":"ilimitado","url":"http://simples.lvh.me:3000/produto/animagical-woman-feminino-20ml1"},{"titulo":"Individuel Masculino - 75ml","id":31,"codigo":"MBIND75","preco":"349.99","quantidade_disponivel":"ilimitado","url":"http://simples.lvh.me:3000/produto/individuel-masculino-75ml"},{"titulo":"Perfume P Black Masculino - 75ml","id":29,"codigo":"PBK75","preco":"358.99","quantidade_disponivel":"ilimitado","url":"http://simples.lvh.me:3000/produto/perfume-p-black-masculino-75ml"},{"titulo":"Silver Black Masculino - 100ml","id":39,"codigo":"AZZSILV100","preco":"129.0","quantidade_disponivel":"ilimitado","url":"http://simples.lvh.me:3000/produto/silver-black-masculino-100ml"},{"titulo":"Soul Masculino - 100ml","id":41,"codigo":"SOUL100","preco":"119.9","quantidade_disponivel":"ilimitado","url":"http://simples.lvh.me:3000/produto/soul-masculino-100ml"}]
-
-			$("#grid").jTable({
-				dados: data,
-				mensagemEmpty: 'Nenhuma produto cadastrado ainda. Cadastre um agora mesmo !',
-				cabecalho: [
-					{'tipo': 'checkbox', 'width': '20px' },    
-					{'titulo': 'Cod.', 'width': 'auto', 'align': 'left', 'campo': 'codigo' },        
-					{'titulo': 'Titulo', 'width': 'auto', 'align': 'left', 'campo': 'titulo', 'link_url': 'url' },
-					{'titulo': 'Valor', 'width': 'auto', 'align': 'center', 'campo': 'preco', 'tipo': 'monetario' },
-					{'titulo': 'Quantidade', 'width': 'auto', 'align': 'left', 'campo': 'quantidade_disponivel' }
-				],
-        opcoesTitulo: 'Opções',
-        opcoesWidth: '120px', 
-        campoRef: 'id',
-        campoTituloRef: 'id',
-        opcoes: [{'icon' : 'imagens/icon_edit.png', 'link':'','funcao': '', 'alt':'editar', 'params': ['id']}, 
-          {'icon' : 'imagens/icon_trash.png', 'funcao':'funcao_de_teste', 'alt':'suspender', 'ajax': 'true', 'params': ['titulo']}]
-			});
+			data = [
+				{"titulo":"Animagical Masculino - 90ml","id":37,"codigo":"PUANI90","preco":"104.0","quantidade_disponivel":"ilimitado","url":"http://simples.lvh.me:3000/produto/animagical-woman-masculino-90ml"},
+				{"titulo":"Animagical Woman Feminino - 60ml","id":33,"codigo":"PUANI60","preco":"79.9","quantidade_disponivel":"ilimitado","url":"http://simples.lvh.me:3000/produto/animagical-woman-feminino-20ml1"},
+				{"titulo":"Individuel Masculino - 75ml","id":31,"codigo":"MBIND75","preco":"349.99","quantidade_disponivel":"ilimitado","url":"http://simples.lvh.me:3000/produto/individuel-masculino-75ml"},
+				{"titulo":"Perfume P Black Masculino - 75ml","id":29,"codigo":"PBK75","preco":"358.99","quantidade_disponivel":"ilimitado","url":"http://simples.lvh.me:3000/produto/perfume-p-black-masculino-75ml"},
+				{"titulo":"Silver Black Masculino - 100ml","id":39,"codigo":"AZZSILV100","preco":"129.0","quantidade_disponivel":"ilimitado","url":"http://simples.lvh.me:3000/produto/silver-black-masculino-100ml"},
+				{"titulo":"Soul Masculino - 100ml","id":41,"codigo":"SOUL100","preco":"119.9","quantidade_disponivel":"ilimitado","url":"http://simples.lvh.me:3000/produto/soul-masculino-100ml"}
+			]
 
 			function funcao_de_teste(titulo) {
 				alert(titulo);
 				console.log($("#grid").getParametros());
 			}
+			
+			$(document).ready(function() {
+			
+				$("#grid").jTable({
+					dados: data,
+					mensagemEmpty: 'Nenhuma produto cadastrado ainda. Cadastre um agora mesmo !',
+					cabecalho: [
+						{'titulo': 'Cod.', 'width': 'auto', 'align': 'left', 'campo': 'codigo' },        
+						{'titulo': 'Titulo', 'width': 'auto', 'align': 'left', 'campo': 'titulo', 'link_url': 'url' },
+						{'titulo': 'Valor', 'width': 'auto', 'align': 'center', 'campo': 'preco', 'tipo': 'monetario' },
+						{'titulo': 'Quantidade', 'width': 'auto', 'align': 'left', 'campo': 'quantidade_disponivel' }
+					],
+					actions: [
+						{'titulo': 'adicionar', 'width': 'auto', 'icon' : 'imagens/icon_edit.png', 'funcao': 'adicionar', 'alt':'adicionar' },        
+						{'titulo': 'remover', 'width': 'auto', 'icon' : 'imagens/icon_trash.png', 'funcao': 'remover', 'alt':'remover' }
+					],					
+					opcoesTitulo: 'Opções',
+					opcoesWidth: '120px', 
+					campoRef: 'id',
+					campoTituloRef: 'id',
+					checkbox: true,
+					actionBar: true,
+					opcoes: [{'icon' : 'imagens/icon_edit.png', 'link':'','funcao': '', 'alt':'editar', 'params': ['id']}, 
+					  {'icon' : 'imagens/icon_trash.png', 'funcao':'funcao_de_teste', 'alt':'suspender', 'ajax': 'true', 'params': ['titulo']}]
+				});		
+			});
 
 		</script>
 
