@@ -48,7 +48,7 @@
 
 		function showLoading() {
 
-			$(div).html('<div class="loader"><img src="/imagens/ajax-loader.gif">' + parametros.mensagemCarregando + '</div>');
+			$(div).html('<div class="loader"><img src="imagens/ajax-loader.gif">' + parametros.mensagemCarregando + '</div>');
 			$(window).trigger('resize');
 		}
 
@@ -541,7 +541,7 @@
 
 		}
 
-		formataValor = function(valor) {
+		function formataValor(valor) {
 
 			valorProd = (Math.round(valor*100)).toString();
 			valorString = "R$ " + valorProd.substring(0, valorProd.length-2) + "," + valorProd.toString().substring(valorProd.length-2, valorProd.length);
