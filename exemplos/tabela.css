@@ -103,6 +103,22 @@ table td.center {
 	text-align: center;
 }
 
+.jTable_action_bar {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.jTable_action_bar li {
+	float: left;
+	margin-right: 20px;
+	font-size: 1.2em;
+}
+
+.jTable_action_bar li img {
+	margin-right: 10px;
+}
+
 /* -----------------------------------------------------------
 	content -> right -> box / table action
 ----------------------------------------------------------- */

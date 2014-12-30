@@ -128,6 +128,7 @@
 		
 		function constroiCabecalhoAction() {
 		
+			var actions = settings.actions;
 			var colunas = columnsCount();
 			conteudo = "";
 			conteudo += "<TR>";
@@ -139,6 +140,21 @@
 			}
 			
 			conteudo += '<TH class="left last" colspan="' + (colunas + 1) + '">';
+			conteudo += '<ul class="jTable_action_bar">';
+			
+			for ( var i = 0; i < actions.length; i++) {
+
+				conteudo += '<li>';
+				
+				if (actions[i].icon != null) {
+					conteudo += '<img src="' + actions[i].icon + '">';
+				}
+
+				conteudo += actions[i].titulo;
+				conteudo += '</li>';								
+			}
+			
+			conteudo += '</ul>';
 			conteudo += '</TH>';							
 			return conteudo;
 		}
