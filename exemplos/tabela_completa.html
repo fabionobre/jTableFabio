@@ -22,6 +22,7 @@
 				dados: data,
 				mensagemEmpty: 'Nenhuma produto cadastrado ainda. Cadastre um agora mesmo !',
 				cabecalho: [
+					{'tipo': 'checkbox', 'width': '20px' },    
 					{'titulo': 'Cod.', 'width': 'auto', 'align': 'left', 'campo': 'codigo' },        
 					{'titulo': 'Titulo', 'width': 'auto', 'align': 'left', 'campo': 'titulo', 'link_url': 'url' },
 					{'titulo': 'Valor', 'width': 'auto', 'align': 'center', 'campo': 'preco', 'tipo': 'monetario' },
@@ -37,6 +38,7 @@
 
 			function funcao_de_teste(titulo) {
 				alert(titulo);
+				console.log($("#grid").getParametros());
 			}
 
 		</script>
