@@ -136,17 +136,11 @@
 
 				conteudo += '" style="width:' + cabecalho[i].width + ';">';
 
-				if (cabecalho[i].tipo == null) {
+				if (cabecalho[i].tipo == "checkbox") {
 
-					conteudo += cabecalho[i].titulo;
+					if (cabecalho[i].titulo == null || cabecalho[i].titulo == '') {
 
-				} else if (cabecalho[i].tipo == "checkbox") {
-
-					if (cabecalho[i].titulo == null
-							|| cabecalho[i].titulo == '') {
-
-						conteudo += '<input type="checkbox" class="jTableCheckBnt" rel="'
-								+ i + '" />';
+						conteudo += '<input type="checkbox" class="jTableCheckBnt" rel="' + i + '" />';
 
 					} else {
 
@@ -155,44 +149,16 @@
 
 				} else {
 
-					conteudo += cabecalho[i].titulo;
-
+					conteudo += cabecalho[i].titulo || "";
 				}
 
 				conteudo += '</TH>';
-
 			}
 
 			if (settings.opcoes.length > 0) {
-				conteudo += '<TH class="center last" style="width: '
-						+ settings.opcoesWidth + '">';
-
-				if (settings.opcoesTitulo != null) {
-
-					conteudo += settings.opcoesTitulo;
-
-				} else {
-
-					conteudo += 'opções';
-				}
-
-				conteudo += '</TH>';
-			}
-
-			// old - deverá ser excluido no futuro
-
-			if (settings.editar || settings.remover) {
-				conteudo += '<TH class="center last" style="width: 80px">';
-
-				if (settings.opcoesTitulo != null) {
-
-					conteudo += settings.opcoesTitulo;
-
-				} else {
-
-					conteudo += 'opções';
-				}
-
+			
+				conteudo += '<TH class="center last" style="width: ' + settings.opcoesWidth + '">';
+				conteudo += settings.opcoesTitulo || conteudo += 'opções';				
 				conteudo += '</TH>';
 			}
 
@@ -202,8 +168,7 @@
 						
 			for ( var i = 0; i < json.length; i++) {
 
-				conteudo += '<TR id="' + settings.nome + '-'
-						+ json[i][settings.campoRef] + '">';
+				conteudo += '<TR id="' + settings.nome + '-' + json[i][settings.campoRef] + '">';
 
 				for ( var f = 0; f < cabecalho.length; f++) {
 
@@ -268,15 +233,12 @@
 
 					} else if (cabecalho[f].tipo == "checkbox") {
 
-						conteudo += '<input type="checkbox" class="jTableCheck'
-								+ f + '" name="' + cabecalho[f].campo
-								+ '[]" value="' + json[i][cabecalho[f].campo]
-								+ '" />';
+						conteudo += '<input type="checkbox" class="jTableCheck' + f + '" name="' + cabecalho[f].campo + '[]" value="' + json[i][cabecalho[f].campo] + '" />';
 
 					} else if (cabecalho[f].tipo == "boolean") {
 
-						if (json[i][cabecalho[f].campo] == 'true'
-								|| json[i][cabecalho[f].campo] == true) {
+						if (json[i][cabecalho[f].campo] == 'true' || json[i][cabecalho[f].campo] == true) {
+						
 							conteudo += '<div class="tabelaCheck"></div>';
 						}
 					}
@@ -294,11 +256,11 @@
 					for (x in settings.opcoes) {
 
 						if (settings.opcoes[x].ajax == 'true') {
+						
 							link = 'javascript:;';
 						} else {
 
-							if (settings.opcoes[x].params != null
-									&& settings.opcoes[x].params.length > 0) {
+							if (settings.opcoes[x].params != null && settings.opcoes[x].params.length > 0) {
 
 								linkParams = "?";
 
@@ -308,9 +270,7 @@
 										linkParams += '&';
 									}
 
-									linkParams += settings.opcoes[x].params[y]
-											+ '='
-											+ json[i][settings.opcoes[x].params[y]];
+									linkParams += settings.opcoes[x].params[y] + '=' + json[i][settings.opcoes[x].params[y]];
 								}
 							}
 
@@ -341,9 +301,7 @@
 						}
 
 						conteudo += '<a href="' + link + '" style="margin: 0 5px;" ' + complemento + '>';
-						conteudo += '<img src="' + settings.opcoes[x].icon
-								+ '" alt="' + settings.opcoes[x].alt
-								+ '" title="' + settings.opcoes[x].alt + '">';
+						conteudo += '<img src="' + settings.opcoes[x].icon + '" alt="' + settings.opcoes[x].alt + '" title="' + settings.opcoes[x].alt + '">';
 					}
 
 					conteudo += '</TD>';
@@ -354,27 +312,20 @@
 					conteudo += '<TD class="center last" style="width: 50px">';
 
 					if (settings.editar) {
-						conteudo += '<a href="' + settings.linkEditar + '?'
-								+ settings.campoRef + '='
-								+ json[i][settings.campoRef]
-								+ '" style="margin-right: 10px;">';
-						conteudo += '<img src="' + settings.iconEditar
-								+ '" alt="excluir">';
+						conteudo += '<a href="' + settings.linkEditar + '?' + settings.campoRef + '=' + json[i][settings.campoRef] + '" style="margin-right: 10px;">';
+						conteudo += '<img src="' + settings.iconEditar + '" alt="excluir">';
 						conteudo += '</a>';
 					}
 
 					if (settings.remover) {
-						conteudo += '<a href="javascript:;" onclick="'
-								+ settings.funcaoRemover + '(\''
-								+ json[i][settings.campoRef] + '\', \''
-								+ json[i][settings.campoTituloRef] + '\');">';
-						conteudo += '<img src="' + settings.iconExcluir
-								+ '" alt="excluir">';
+						conteudo += '<a href="javascript:;" onclick="' + settings.funcaoRemover + '(\'' + json[i][settings.campoRef] + '\', \'' + json[i][settings.campoTituloRef] + '\');">';
+						conteudo += '<img src="' + settings.iconExcluir + '" alt="excluir">';
 						conteudo += '</a>';
 					}
 
 					conteudo += '</TD>';
 				}
+				
 				conteudo += "</TR>";
 			}
 
@@ -408,8 +359,7 @@
 						} else {
 							classe = "";
 						}
-						conteudo += '<li' + classe + '><a href="" rel="' + (i)
-								+ '">' + (i + 1) + '</a></li>';
+						conteudo += '<li' + classe + '><a href="" rel="' + (i) + '">' + (i + 1) + '</a></li>';
 					}
 
 				} else {
@@ -438,8 +388,7 @@
 						} else {
 							classe = "";
 						}
-						conteudo += '<li' + classe + '><a href="" rel="' + (i)
-								+ '">' + (i + 1) + '</a></li>';
+						conteudo += '<li' + classe + '><a href="" rel="' + (i) + '">' + (i + 1) + '</a></li>';
 					}
 
 					conteudo += '<li>...</li>';
@@ -452,13 +401,11 @@
 				} else {
 
 					conteudo += '<li><a href="" rel="' + (parseInt(paginaAtual) + 1) + '">prox. >></a></li>';
-
 					conteudo += '<li><a href="" rel="' + (parseInt(paginas) - 1) + '">fim</a></li>';
 				}
 
 				conteudo += '</ul>';
 				conteudo += '</div>';
-
 			}
 
 			// --
