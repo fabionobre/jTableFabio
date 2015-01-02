@@ -16,6 +16,23 @@
 
 		<script>
 
+			var selecionados = new Array();
+
+			function funcao_de_teste(titulo) {
+				alert(titulo);
+				console.log($("#grid").getParametros());
+			}
+
+			function adicionar() {
+				selecionados = $("#grid").getSelected();	
+				var selecionadosTxt = "";
+
+				for (key in selecionados) {
+					selecionadosTxt += selecionados[key].titulo + "\n";
+				}
+				alert("Você escolhe os produtos \n\n" + selecionadosTxt);		
+			}
+
 			data = [
 				{"titulo":"Animagical Masculino - 90ml","id":37,"codigo":"PUANI90","preco":"104.0","quantidade_disponivel":"ilimitado","url":"http://simples.lvh.me:3000/produto/animagical-woman-masculino-90ml"},
 				{"titulo":"Animagical Woman Feminino - 60ml","id":33,"codigo":"PUANI60","preco":"79.9","quantidade_disponivel":"ilimitado","url":"http://simples.lvh.me:3000/produto/animagical-woman-feminino-20ml1"},
@@ -24,12 +41,7 @@
 				{"titulo":"Silver Black Masculino - 100ml","id":39,"codigo":"AZZSILV100","preco":"129.0","quantidade_disponivel":"ilimitado","url":"http://simples.lvh.me:3000/produto/silver-black-masculino-100ml"},
 				{"titulo":"Soul Masculino - 100ml","id":41,"codigo":"SOUL100","preco":"119.9","quantidade_disponivel":"ilimitado","url":"http://simples.lvh.me:3000/produto/soul-masculino-100ml"}
 			]
-
-			function funcao_de_teste(titulo) {
-				alert(titulo);
-				console.log($("#grid").getParametros());
-			}
-			
+		
 			$(document).ready(function() {
 			
 				$("#grid").jTable({

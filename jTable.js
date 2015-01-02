@@ -12,7 +12,8 @@
 			async: true,
 			checkbox: false,
 			titleBar: true,
-			actionBar: false
+			actionBar: false,
+			urlImageLoading: "imagens/ajax-loader.gif"
 		}, settings);
 
 		var parametros = settings;
@@ -41,6 +42,16 @@
 				}
 
 				getTabela(paginaAtual);
+			},
+			getSelected : function() {
+
+				var selecionados = new Array();
+
+				$.each($(div).find('.jTableCheck' + divName + ":checked"), function(idx, valor ) {
+					selecionados.push(settings.dados[$(valor).val()]);
+				});
+
+				return selecionados;
 			}
 		});
 
@@ -52,7 +63,7 @@
 
 		function showLoading() {
 
-			$(div).html('<div class="loader"><img src="imagens/ajax-loader.gif">' + parametros.mensagemCarregando + '</div>');
+			$(div).html('<div class="loader"><img src="' + settings.urlImageLoading + '">' + parametros.mensagemCarregando + '</div>');
 			$(window).trigger('resize');
 		}
 
@@ -101,15 +112,14 @@
 		function constroiCabecalho() {
 		
 			conteudo = "";
-			console.log(parametros.actionBar);
-		
-			if (parametros.titleBar) {
-				conteudo += constroiCabecalhoTitle();
-			} 
 			
 			if (parametros.actionBar) {
 				conteudo += constroiCabecalhoAction();
 			}
+
+			if (parametros.titleBar) {
+				conteudo += constroiCabecalhoTitle();
+			} 
 			
 			return conteudo;
 		}
@@ -145,12 +155,21 @@
 			for ( var i = 0; i < actions.length; i++) {
 
 				conteudo += '<li>';
+
+				if (actions[i].funcao != null) {		
+					conteudo += '<a href="javascript:;" onclick="' + actions[i].funcao + '();" alt="' + actions[i].alt + '">';
+				}
 				
 				if (actions[i].icon != null) {
 					conteudo += '<img src="' + actions[i].icon + '">';
 				}
 
-				conteudo += actions[i].titulo;
+				conteudo += '' + actions[i].titulo + '';
+
+				if (actions[i].funcao != null) {		
+					conteudo += '</a>';
+				}
+
 				conteudo += '</li>';								
 			}
 			

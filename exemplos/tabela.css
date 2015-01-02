@@ -5,8 +5,7 @@
 	margin: 0;
 	padding: 0 20px 10px 20px;
 	clear: both;
-	overflow: hidden;
-	
+	overflow: hidden;	
 }
 
 table {
@@ -111,13 +110,22 @@ table td.center {
 
 .jTable_action_bar li {
 	float: left;
-	margin-right: 20px;
+	margin-right: 40px;
 	font-size: 1.2em;
+	white-space: nowrap;
 }
 
 .jTable_action_bar li img {
 	margin-right: 10px;
+	float: left;
 }
+
+.jTable_action_bar li a {
+	display: block;
+	text-decoration: none;
+	color: #333;
+}
+
 
 /* -----------------------------------------------------------
 	content -> right -> box / table action
