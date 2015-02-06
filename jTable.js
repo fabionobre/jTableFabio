@@ -21,42 +21,69 @@
 		var cabecalho = [];
 		var div = this;
 		var paginaAtual = 0;
-		var divName = this.attr('id');
+		settings.divName = this.attr('id');
 		
-		$.fn.extend({
-			setParametros : function(parametrosIn) {
+		return this.each(function(txt) {
 
-				parametros = parametrosIn;
+			var $self = this;
 
-			},
-			getParametros : function() {
+    	var parametros = $(this).data('jTable');
 
-				return parametros;
-			},
-			refresh : function(dadosTabela) {
+    	if (!parametros) {
+    		parametros = {};
+      	parametros.id = $(this).attr("id");
+      	parametros.dados = settings.dados;
+				$(this).data('jTable', parametros);
+    	}
 
-				showLoading();
-				
-				if (dadosTabela != null) {
-					parametros.dados = dadosTabela;
-				}
+			$.fn.extend({
 
-				getTabela(paginaAtual);
-			},
-			getSelected : function() {
+				setParametros : function(parametrosIn) {
 
-				var selecionados = new Array();
+					parametros = parametrosIn;
 
-				$.each($(div).find('.jTableCheck' + divName + ":checked"), function(idx, valor ) {
-					selecionados.push(settings.dados[$(valor).val()]);
-				});
+				},
+				getParametros : function() {
 
-				return selecionados;
-			}
-		});
+					return parametros;
+				},
+				refresh : function(dadosTabela) {
 
-		$(this).each(function(txt) {
+					showLoading();
+					
+					if (dadosTabela != null) {
+						parametros.dados = dadosTabela;
+					} else {
+						parametros.dados = $(this).data('jTable').dados;
+						settings.dados = $(this).data('jTable').dados;
+					}
 
+					getTabela(paginaAtual);
+				},
+				getSelected : function() {
+
+					var parametros = $(this).data('jTable');
+					var dados = parametros.dados;
+					var div = $('#' + parametros.id);
+					var selecionados = new Array();
+
+					$.each(div.find('.jTableCheck' + parametros.id + ":checked"), function(idx, valor ) {
+						selecionados.push(dados[$(valor).val()]);
+					});
+
+					return selecionados;
+				},
+				setDados : function(dados) {
+					var parametros = $(this).data('jTable');
+					parametros.dados = dados;
+					$(this).data('jTable', parametros);
+				},
+				getDados : function() {
+					return $(this).data('jTable').dados;
+				}			
+			});
+
+			settings.divName = div.attr('id');
 			showLoading();
 			getTabela(paginaAtual);
 		});
@@ -145,7 +172,7 @@
 			
 			if (parametros.checkbox) {
 				conteudo += '<TH class="center" style="width:20px;">';
-				conteudo += '<input type="checkbox" class="jTableCheckBnt" rel="' + divName + '" />';
+				conteudo += '<input type="checkbox" class="jTableCheckBnt" rel="' + settings.divName + '" />';
 				conteudo += '</TH>';				
 			}
 			
@@ -192,7 +219,7 @@
 			
 			if (parametros.checkbox) {
 				conteudo += '<TH class="center" style="width:20px;">';
-				conteudo += '<input type="checkbox" class="jTableCheckBnt" rel="' + divName + '" />';
+				conteudo += '<input type="checkbox" class="jTableCheckBnt" rel="' + settings.divName + '" />';
 				conteudo += '</TH>';				
 			}
 			
@@ -263,7 +290,7 @@
 
 				if (parametros.checkbox) {
 					conteudo += '<TD class="center">';
-					conteudo += '<input type="checkbox" class="jTableCheck' + divName + '" name="checkbox[]" value="' + i + '" />';					
+					conteudo += '<input type="checkbox" class="jTableCheck' + settings.divName + '" name="checkbox[]" value="' + i + '" />';					
 					conteudo += '</TD>';				
 				}				
 			
@@ -561,10 +588,11 @@
 
 		function getCabecalho() {
 
-			if (cabecalho.length <= 0
-					&& (settings.cabecalho == null || settings.cabecalho.length <= 0)) {
+			json = parametros.dados;
 
-				for ( var member in json.list[0]) {
+			if (cabecalho.length <= 0	&& (settings.cabecalho == null || settings.cabecalho.length <= 0)) {
+
+				for (var member in json[0]) {
 
 					var obj = {
 						'titulo' : member,
