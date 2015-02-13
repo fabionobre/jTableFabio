@@ -490,16 +490,20 @@
 
 						inicio = 0;
 
-					} else if (parseInt(paginaAtual + 1) >= paginas) {
+					} else if ((parseInt(paginaAtual) + 4) >= paginas) {
 
-						inicio = paginas - 10;
+						inicio = paginas - 9;
 
 					} else {
 
-						inicio = paginaAtual - 5;
+						inicio = paginaAtual - 4;
 					}
 
-					var fim = inicio + 10;
+					var fim = inicio + 9;
+					
+					if (inicio > 0) {
+						conteudo += '<li>...</li>';						
+					}
 
 					for ( var i = inicio; i < fim; i++) {
 
@@ -511,7 +515,9 @@
 						conteudo += '<li' + classe + '><a href="" rel="' + (i) + '">' + (i + 1) + '</a></li>';
 					}
 
-					conteudo += '<li>...</li>';
+					if (fim < paginas) {
+						conteudo += '<li>...</li>';						
+					}
 				}
 
 				if (paginaAtual >= (paginas - 1)) {
