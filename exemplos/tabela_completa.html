@@ -30,17 +30,14 @@
 				for (key in selecionados) {
 					selecionadosTxt += selecionados[key].titulo + "\n";
 				}
-				alert("Você escolhe os produtos \n\n" + selecionadosTxt);		
-			}
+				alert("Você escolheu os produtos \n\n" + selecionadosTxt);		
+			}		
 
-			data = [
-				{"titulo":"Animagical Masculino - 90ml","id":37,"codigo":"PUANI90","preco":"104.0","quantidade_disponivel":"ilimitado","url":"http://simples.lvh.me:3000/produto/animagical-woman-masculino-90ml"},
-				{"titulo":"Animagical Woman Feminino - 60ml","id":33,"codigo":"PUANI60","preco":"79.9","quantidade_disponivel":"ilimitado","url":"http://simples.lvh.me:3000/produto/animagical-woman-feminino-20ml1"},
-				{"titulo":"Individuel Masculino - 75ml","id":31,"codigo":"MBIND75","preco":"349.99","quantidade_disponivel":"ilimitado","url":"http://simples.lvh.me:3000/produto/individuel-masculino-75ml"},
-				{"titulo":"Perfume P Black Masculino - 75ml","id":29,"codigo":"PBK75","preco":"358.99","quantidade_disponivel":"ilimitado","url":"http://simples.lvh.me:3000/produto/perfume-p-black-masculino-75ml"},
-				{"titulo":"Silver Black Masculino - 100ml","id":39,"codigo":"AZZSILV100","preco":"129.0","quantidade_disponivel":"ilimitado","url":"http://simples.lvh.me:3000/produto/silver-black-masculino-100ml"},
-				{"titulo":"Soul Masculino - 100ml","id":41,"codigo":"SOUL100","preco":"119.9","quantidade_disponivel":"ilimitado","url":"http://simples.lvh.me:3000/produto/soul-masculino-100ml"}
-			]
+			data = new Array();
+
+			for (i=0; i< 5; i++) {
+				data.push({"titulo":"Titulo " + i, "id": i,"codigo": "COD" + i, "preco":"119.9", "quantidade_disponivel":"ilimitado"," url":"http://simples.lvh.me:3000/produto/soul-masculino-100ml"});	
+			}
 		
 			$(document).ready(function() {
 			
