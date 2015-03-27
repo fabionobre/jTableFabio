@@ -13,6 +13,8 @@
 			checkbox: false,
 			titleBar: true,
 			actionBar: false,
+			quantidadePorPagina: 0,
+			paginaAtual: 1,
 			urlImageLoading: "imagens/ajax-loader.gif"
 		}, settings);
 
@@ -21,6 +23,7 @@
 		var cabecalho = [];
 		var div = this;
 		var paginaAtual = 0;
+		var paginacaoSobDemanda = true;
 		settings.divName = this.attr('id');
 		
 		return this.each(function(txt) {
@@ -35,6 +38,8 @@
       	parametros.dados = settings.dados;
 				$(this).data('jTable', parametros);
     	}
+
+			paginaAtual = settings.paginaAtual-1;			
 
 			$.fn.extend({
 
@@ -99,6 +104,21 @@
 			if (parametros.dados != null) {
 
 				json = parametros.dados;
+
+				// ajusta a quantidade de paginas
+
+				if (settings.quantidadePorPagina > 0) {
+
+					paginacaoSobDemanda = false;
+					paginas = Math.floor(parametros.dados.length / settings.quantidadePorPagina);
+
+					if ((parametros.dados.length % settings.quantidadePorPagina) > 0) {
+						paginas = paginas + 1;
+					}
+
+					paginas = paginas;
+				}
+
 				paginaAtual = pagina;
 				getCabecalho(parametros.dados);
 				showTable();
@@ -250,8 +270,12 @@
 		
 		function showTable() {
 
-			json = parametros.dados;
-		
+			json = parametros.dados;		
+
+			if (!paginacaoSobDemanda) {
+				json = parametros.dados.slice(paginaAtual * settings.quantidadePorPagina, (paginaAtual * settings.quantidadePorPagina) + settings.quantidadePorPagina) ;
+			}
+
 			var conteudo = "";
 			var colunas = cabecalho.length - 1;
 

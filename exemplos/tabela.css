@@ -243,11 +243,10 @@ table td.center {
 	float: left;
 	list-style: none;
 	font-size: .8em;
-	background-color: #ff7e00;
+	background-color: #DDDDDD;
 	border: none;
-	border-radius: 5px;	
-	border: 1px solid #ff7e00;
-	padding: 5px 8px;
+	border-radius: 0px;	
+	border: 1px solid #DDDDDD;
 }
 
 .pagination ul.pager li.separator {
@@ -265,6 +264,8 @@ table td.center {
 	display: block;
 	float: left;
 	text-decoration: none;
+	color: #333;	
+	padding: 5px 8px;	
 }
 
 .pagination ul.pager li.disabled, .pagination ul.pager li.disabled a {

@@ -35,7 +35,7 @@
 
 			data = new Array();
 
-			for (i=0; i< 5; i++) {
+			for (i=0; i< 55; i++) {
 				data.push({"titulo":"Titulo " + i, "id": i,"codigo": "COD" + i, "preco":"119.9", "quantidade_disponivel":"ilimitado"," url":"http://simples.lvh.me:3000/produto/soul-masculino-100ml"});	
 			}
 		
@@ -60,6 +60,8 @@
 					campoTituloRef: 'id',
 					checkbox: true,
 					actionBar: true,
+					quantidadePorPagina: 10,
+					paginaAtual: 1,
 					opcoes: [{'icon' : 'imagens/icon_edit.png', 'link':'','funcao': '', 'alt':'editar', 'params': ['id']}, 
 					  {'icon' : 'imagens/icon_trash.png', 'funcao':'funcao_de_teste', 'alt':'suspender', 'ajax': 'true', 'params': ['titulo']}]
 				});		
